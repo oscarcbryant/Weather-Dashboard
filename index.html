@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link href='style.css' rel='stylesheet'>
+<body>
+    <header class='heading' id='top-row'>Weather Dashboard</header>
+    <div>
+        <form class="search-input" id="cityForm">
+            <div class="form-example">
+                <label for="city"><strong>Search for a City:</strong> </label>
+                <div>
+                    <input type="text" name="name" id="city-input" required placeholder="Rain, Hail or Shine!" />
+                </div>  
+            </div>
+            <button class='select-button' type='submit'>Let's go!</button>
+         </form>
+    </div>
+    <div id="todays-card">
+        <p id="uvindex"></p>
+    </div>
+    <div id="result-card">
+    </div>
+</body>
+<script src="script.js"></script>
+</html>

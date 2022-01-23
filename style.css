@@ -1,0 +1,10 @@
+#top-row {
+
+    text-align: center;
+    background-color: purple;
+    height: 50px;
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: large;
+    vertical-align: middle;
+}
