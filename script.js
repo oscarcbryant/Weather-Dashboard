@@ -13,35 +13,57 @@ var todaysCard = document.getElementById("todays-card");
 //var  = function (event) {
   //  event.preventDefault();
 
-  function displayTodaysWeather(today, currentObj) {
+  function displayTodaysWeather(event) {
 
-    todaysCard.classList.add('card', 'bg-dark', 'text-light');
+    event.preventDefault();
+    var cityInput = document.querySelector("#city-input");
+
+    console.log(cityInput);
+
+
+    var cityName = cityInput.value;
+
+    var todaysWeather = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=4179e5cc6475d590cdcc3a798210bd52'
+
+    fetch(todaysWeather)
+        .then(function(response) {
+            if (response.ok) {
+                return response.json()
+            }
+        })
+        .then(function(data) { // 5day /3hrs 40objects= 1day 8object * 3 = 24hrs
+            console.log(data);
+            todaysCard.classList.add('card', 'bg-dark', 'text-light');
     
     var todaysCity = document.createElement('h3');
-    todaysCity.textContent = currentObj.name;
+    todaysCity.textContent = data.name;
 
     var todaysDate = document.createElement('p');
-    todaysDate.innerHTML = today.dt_txt;
+    todaysDate.innerHTML = data.dt_txt;
 
     console.log(todaysDate);
 
     var todaysTemp = document.createElement("p");
-    todaysTemp.innerHTML = "Temp: " + today.main.temp + "F";
+    todaysTemp.innerHTML = "Temp: " + data.main.temp + "F";
 
     var todaysWind = document.createElement('p');
-    todaysWind.innerHTML = "Wind: " + today.wind.speed;
+    todaysWind.innerHTML = "Wind: " + data.wind.speed;
 
     var todaysHum = document.createElement('p');
-    todaysHum.innerHTML = "Humidity: " + today.main.humidity + "%";
+    todaysHum.innerHTML = "Humidity: " + data.main.humidity + "%";
 
     var todaysUV = document.createElement("p");
-    todaysUV.innerHTML = "UV Index: " + today.pop;
+    todaysUV.innerHTML = "UV Index: " + data.pop;
     if (todaysUV <= 0.5) {
         today.pop.css("color", "green");
     }
 
     todaysCard.append(todaysCity, todaysDate, todaysTemp, todaysWind, todaysHum, todaysUV);
 
+           
+        })
+
+    
   }
 
    
@@ -77,8 +99,8 @@ function callApi(event) {
     console.log(cityInput);
 
 
-    var user = cityInput.value;
-    var weatherUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + user + "&appid=4179e5cc6475d590cdcc3a798210bd52";
+    var cityName = cityInput.value;
+    var weatherUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=4179e5cc6475d590cdcc3a798210bd52";
 
     fetch(weatherUrl)
         .then(function(response) {
@@ -88,29 +110,27 @@ function callApi(event) {
         })
         .then(function(data) { // 5day /3hrs 40objects= 1day 8object * 3 = 24hrs
             console.log(data);
-            console.log(user);
+            //console.log(user);
             var city = data.city;
             // loop thru the data, increment +8th 40/8 =5days
             // build cards, headings, paragraph; add the textContent
             // append to the forecast container
-            if (!user) {
-                resultCard.innerHTML = '<h3>No results found, please search again!</h3>'
-            } else {
+           // if (!user) {
+              //  resultCard.innerHTML = '<h3>No results found, please search again!</h3>'
+           // } else {
                 weatherCard.textContent = "";
                 for (var i = 0; i < data.list.length; i+= 8) {
                     console.log(i);
-                    displayTodaysWeather(data.list[i], city); 
+                    
                     displayFutureWeather(data.list[i], city);
                 }
-                }
+                })
                        
         }
        
-        );
         
         
-
-}
+        
     
             
    // cardContent.innerHTML = cityInput;
@@ -134,6 +154,7 @@ function generateCity (event) {
 //displayCity();
 
 cityForm.addEventListener('submit', callApi);
+cityForm.addEventListener('submit', displayTodaysWeather);
 
 // function createParagraph(text)
 // {
