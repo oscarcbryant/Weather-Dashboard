@@ -52,8 +52,8 @@ var todaysCard = document.getElementById("todays-card");
     var todaysDate = document.createElement('p');
     todaysDate.innerHTML = data.dt_txt;
 
-    var todaysIcon = document.createElement('p');
-    todaysIcon.innerHTML = data.weather[0].icon;
+    var todaysIcon = document.createElement("div");
+    todaysIcon.innerHTML = `<img src=http://openweathermap.org/img/w/${data.weather[0].icon}.png></img>`;
 
     console.log(todaysDate);
 
@@ -68,13 +68,16 @@ var todaysCard = document.getElementById("todays-card");
 
     var todaysUV = document.createElement("p");
 
-    todaysCard.append(todaysCity, todaysIcon, todaysDate, todaysTemp, todaysWind, todaysHum, todaysUV);
+    todaysCard.append(todaysCity, todaysIcon, todaysDate, todaysTemp, todaysWind, todaysHum, todaysUV).style.border = "thin, solid, black";
 
         }) 
   }
+
+ 
    
   function displayFutureWeather(weather, cityObj) {
 
+    displayHeading();  
 
     weatherCard.classList.add('card', 'bg-light', 'text-dark', 'mb-3', 'p-3');
 
@@ -84,19 +87,25 @@ var todaysCard = document.getElementById("todays-card");
     var windContentEl = document.createElement('p');
     windContentEl.innerHTML = "Wind Speed: " + weather.wind.speed + "Mph";
 
-    var uvContentEl = document.createElement('p');
-    uvContentEl.innerHTML = "UV Index: " + weather.pop;
+    var weatherIcon = document.createElement("div");
+    weatherIcon.innerHTML = `<img src=http://openweathermap.org/img/w/${weather.weather[0].icon}.png></img>`;
 
+
+    var humidity = document.createElement('p');
+    humidity.innerHTML = "Humidity: " + weather.main.humidity + "%";
+
+    var temperature = document.createElement('p');
+    temperature.innerHTML = "Temperature: " + weather.main.temp + " degrees";
 
     var bodyContentEl = document.createElement('p');
     bodyContentEl.innerHTML = weather.dt_txt;
     
 
-    resultCard.append(weatherCard, cityTitleEl, bodyContentEl, windContentEl, uvContentEl);
+    resultCard.append(weatherCard, cityTitleEl, weatherIcon, bodyContentEl, windContentEl, humidity, temperature);
 
 }
 
-    
+
 
 function callApi(event) {
     event.preventDefault();
@@ -131,10 +140,15 @@ function callApi(event) {
                     displayFutureWeather(data.list[i], city);
                 }
                 })
-                       
+                  
         }
        
+        function displayHeading() {
+
+            var heading = document.createElement('h2');
+            heading.innerHTML = "5-Day Forecast";
         
+          }
         
         
     
@@ -161,6 +175,7 @@ function generateCity (event) {
 
 cityForm.addEventListener('submit', callApi);
 cityForm.addEventListener('submit', displayTodaysWeather);
+cityForm.addEventListener('submit', displayHeading);
 
 // function createParagraph(text)
 // {
