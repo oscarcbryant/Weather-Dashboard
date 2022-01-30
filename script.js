@@ -5,15 +5,7 @@ var resultCard = document.getElementById("result-card");
 var todaysCard = document.getElementById("todays-card");
 
 
-//var enteredCity = weatherUrl.split("?")[1].split("&");
-
-//console.log(enteredCity[0]);
-//console.log(enteredCity[1]);
-
-//var  = function (event) {
-  //  event.preventDefault();
-
-  function displayTodaysWeather(event) {
+ function displayTodaysWeather(event) {
 
     event.preventDefault();
     var cityInput = document.querySelector("#city-input");
@@ -33,6 +25,25 @@ var todaysCard = document.getElementById("todays-card");
         })
         .then(function(data) { // 5day /3hrs 40objects= 1day 8object * 3 = 24hrs
             console.log(data);
+            fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=4179e5cc6475d590cdcc3a798210bd52`) 
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                })
+                .then(function(data) {
+                console.log(data)
+                todaysUV.innerHTML = "UV Index: " + data.current.uvi; 
+                if (data.current.uvi < .5) {
+                    return todaysUV.style.backgroundColor = 'green';
+                } else if (data.current.uvi >= .5 && data.current.uvi <= 1); {
+                    return todaysUV.style.backgroundColor = 'yellow';
+                }
+            })
+            .then(function(data) {
+                fetch
+            })
+
             todaysCard.classList.add('card', 'bg-dark', 'text-light');
     
     var todaysCity = document.createElement('h3');
@@ -40,6 +51,9 @@ var todaysCard = document.getElementById("todays-card");
 
     var todaysDate = document.createElement('p');
     todaysDate.innerHTML = data.dt_txt;
+
+    var todaysIcon = document.createElement('p');
+    todaysIcon.innerHTML = data.weather[0].icon;
 
     console.log(todaysDate);
 
@@ -53,19 +67,11 @@ var todaysCard = document.getElementById("todays-card");
     todaysHum.innerHTML = "Humidity: " + data.main.humidity + "%";
 
     var todaysUV = document.createElement("p");
-    todaysUV.innerHTML = "UV Index: " + data.pop;
-    if (todaysUV <= 0.5) {
-        today.pop.css("color", "green");
-    }
 
-    todaysCard.append(todaysCity, todaysDate, todaysTemp, todaysWind, todaysHum, todaysUV);
+    todaysCard.append(todaysCity, todaysIcon, todaysDate, todaysTemp, todaysWind, todaysHum, todaysUV);
 
-           
-        })
-
-    
+        }) 
   }
-
    
   function displayFutureWeather(weather, cityObj) {
 
