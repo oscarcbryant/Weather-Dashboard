@@ -3,8 +3,6 @@ var cityForm = document.querySelector("#cityForm");
 var weatherCard = document.createElement('div');
 var resultCard = document.getElementById("result-card");
 var todaysCard = document.getElementById("todays-card");
-var todaysDate = moment().format("dddd MMMM Do");
-$('#result-card').text(todaysDate);
 
 
  function displayTodaysWeather(event) {
@@ -47,19 +45,21 @@ $('#result-card').text(todaysDate);
             })
 
             todaysCard.classList.add('card', 'bg-dark', 'text-light');
-    
+    var container = document.createElement('div')
+    container.style.display = 'flex';
+    container.style.alignItems = 'center';
+
     var todaysCity = document.createElement('h3');
     todaysCity.textContent = data.name;
+    todaysCity.style.marginRight = '10px';
 
-    // var todaysDate = document.createElement('p');
-    // todaysDate.innerHTML = data.dt_txt;
-
-    
-    
-    // todaysDate.innerHTML = data.dt_txt;
+    var todaysDate = document.createElement('h3');
+    todaysDate.innerHTML = " (" + Intl.DateTimeFormat("default", {day: "2-digit", month: 'long', year: '2-digit'} ).format(new Date()) + ") ";
 
     var todaysIcon = document.createElement("div");
     todaysIcon.innerHTML = `<img src=http://openweathermap.org/img/w/${data.weather[0].icon}.png></img>`;
+
+    container.append(todaysCity, todaysDate, todaysIcon);
 
     console.log(todaysDate);
 
@@ -73,8 +73,9 @@ $('#result-card').text(todaysDate);
     todaysHum.innerHTML = "Humidity: " + data.main.humidity + "%";
 
     var todaysUV = document.createElement("p");
+    todaysUV.style.width = '120px';
 
-    todaysCard.append(todaysCity, todaysIcon, todaysDate, todaysTemp, todaysWind, todaysHum, todaysUV);
+    todaysCard.append(container, todaysTemp, todaysWind, todaysHum, todaysUV);
 
     
 
@@ -88,6 +89,9 @@ $('#result-card').text(todaysDate);
     displayHeading();  
 
     weatherCard.classList.add('bg-light', 'text-dark', 'col-2');
+    var container = document.createElement('div')
+    container.style.display = 'flex';
+    container.style.alignItems = 'center';
 
     var cityTitleEl = document.createElement('h3');
     cityTitleEl.textContent = cityObj.name;
@@ -109,7 +113,7 @@ $('#result-card').text(todaysDate);
     bodyContentEl.innerHTML = weather.dt_txt;
     
     weatherCard.append(cityTitleEl, weatherIcon, bodyContentEl, windContentEl, humidity, temperature);
-    resultCard.append(weatherCard);
+    resultCard.append(container, weatherCard);
 
 }
 
