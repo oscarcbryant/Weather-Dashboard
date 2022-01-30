@@ -3,6 +3,8 @@ var cityForm = document.querySelector("#cityForm");
 var weatherCard = document.createElement('div');
 var resultCard = document.getElementById("result-card");
 var todaysCard = document.getElementById("todays-card");
+var todaysDate = moment().format("dddd MMMM Do");
+$('#result-card').text(todaysDate);
 
 
  function displayTodaysWeather(event) {
@@ -37,7 +39,7 @@ var todaysCard = document.getElementById("todays-card");
                 if (data.current.uvi < .5) {
                     return todaysUV.style.backgroundColor = 'green';
                 } else if (data.current.uvi >= .5 && data.current.uvi <= 1); {
-                    return todaysUV.style.backgroundColor = 'yellow';
+                    return todaysUV.style.color = 'black', todaysUV.style.backgroundColor = 'yellow';
                 }
             })
             .then(function(data) {
@@ -49,8 +51,12 @@ var todaysCard = document.getElementById("todays-card");
     var todaysCity = document.createElement('h3');
     todaysCity.textContent = data.name;
 
-    var todaysDate = document.createElement('p');
-    todaysDate.innerHTML = data.dt_txt;
+    // var todaysDate = document.createElement('p');
+    // todaysDate.innerHTML = data.dt_txt;
+
+    
+    
+    // todaysDate.innerHTML = data.dt_txt;
 
     var todaysIcon = document.createElement("div");
     todaysIcon.innerHTML = `<img src=http://openweathermap.org/img/w/${data.weather[0].icon}.png></img>`;
@@ -68,7 +74,9 @@ var todaysCard = document.getElementById("todays-card");
 
     var todaysUV = document.createElement("p");
 
-    todaysCard.append(todaysCity, todaysIcon, todaysDate, todaysTemp, todaysWind, todaysHum, todaysUV).style.border = "thin, solid, black";
+    todaysCard.append(todaysCity, todaysIcon, todaysDate, todaysTemp, todaysWind, todaysHum, todaysUV);
+
+    
 
         }) 
   }
@@ -79,7 +87,7 @@ var todaysCard = document.getElementById("todays-card");
 
     displayHeading();  
 
-    weatherCard.classList.add('card', 'bg-light', 'text-dark', 'mb-3', 'p-3');
+    weatherCard.classList.add('bg-light', 'text-dark', 'col-2');
 
     var cityTitleEl = document.createElement('h3');
     cityTitleEl.textContent = cityObj.name;
@@ -100,8 +108,8 @@ var todaysCard = document.getElementById("todays-card");
     var bodyContentEl = document.createElement('p');
     bodyContentEl.innerHTML = weather.dt_txt;
     
-
-    resultCard.append(weatherCard, cityTitleEl, weatherIcon, bodyContentEl, windContentEl, humidity, temperature);
+    weatherCard.append(cityTitleEl, weatherIcon, bodyContentEl, windContentEl, humidity, temperature);
+    resultCard.append(weatherCard);
 
 }
 
