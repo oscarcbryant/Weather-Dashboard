@@ -88,10 +88,11 @@ var todaysCard = document.getElementById("todays-card");
 
     displayHeading();  
 
-    weatherCard.classList.add('bg-light', 'text-dark', 'col-2');
     var container = document.createElement('div')
     container.style.display = 'flex';
     container.style.alignItems = 'center';
+
+    weatherCard.classList.add('bg-light', 'text-dark', 'col-2');
 
     var cityTitleEl = document.createElement('h3');
     cityTitleEl.textContent = cityObj.name;
@@ -113,8 +114,7 @@ var todaysCard = document.getElementById("todays-card");
     bodyContentEl.innerHTML = weather.dt_txt;
     
     weatherCard.append(cityTitleEl, weatherIcon, bodyContentEl, windContentEl, humidity, temperature);
-    resultCard.append(container, weatherCard);
-
+    resultCard.append(weatherCard);
 }
 
 
@@ -152,7 +152,13 @@ function callApi(event) {
                     displayFutureWeather(data.list[i], city);
                 }
                 })
-                  
+                displayHeading()
+        }
+
+        function storeSearchHistory() {
+            var cityInput = document.querySelector("#city-input");
+            localStorage.setItem("city-input", cityInput);
+
         }
        
         function displayHeading() {
