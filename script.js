@@ -5,6 +5,7 @@ var resultCard = document.getElementById("result-card");
 var todaysCard = document.getElementById("todays-card");
 
 
+
  function displayTodaysWeather(event) {
 
     event.preventDefault();
@@ -155,52 +156,41 @@ function callApi(event) {
                 displayHeading()
         }
 
+        function getSearchHistory(){
+
+            var cityInput = document.querySelector("#city-input").value;
+
+            searchHistory = JSON.parse(localStorage.getItem("search-history"))
+
+            for(i=0; i < searchHistory.length; i++){
+                        searchHistory.append('<button type="button" onclick="searchHistory(event)" id ="'+searchHistory[i]+'"class="col-12 btn btn-info text-muted historyBttn">'+ searchHistory[i] +'</button><div class="p-1"></div>' )        
+                    }
+                } 
+        
+
         function storeSearchHistory() {
-            var cityInput = document.querySelector("#city-input");
-            localStorage.setItem("city-input", cityInput);
+
+            var searchHistory = JSON.parse(localStorage.getItem("search-history")) || [];
+
+            var cityInput = document.querySelector("#city-input").value;
+
+            searchHistory.unshift(cityInput);
+
+            localStorage.setItem('search-history', JSON.stringify(searchHistory));
+
+
 
         }
-       
+        
         function displayHeading() {
 
             var heading = document.createElement('h2');
             heading.innerHTML = "5-Day Forecast";
         
           }
-        
-        
-    
-            
-   // cardContent.innerHTML = cityInput;
 
-    //cityCard.append(cardContent);
-//}
-function generateCity (event) {
-    event.preventDefault();
-
-   var cityInput = document.querySelector("#user").value;
- 
-    if (!cityInput) {
-
-        console.log("we need a value, champion!");
-        return;
-    }
-    console.log(cityInput);
-}
-
-
-//displayCity();
-
+cityForm.addEventListener('submit', getSearchHistory);
+cityForm.addEventListener('submit', storeSearchHistory);
 cityForm.addEventListener('submit', callApi);
 cityForm.addEventListener('submit', displayTodaysWeather);
 cityForm.addEventListener('submit', displayHeading);
-
-// function createParagraph(text)
-// {
-//     var element = document.createElement('p');
-//     element.innerHTML = text;
-//     return element;
-// }
-
-// var windContentEl = createParagraph("Wind: " + weather.wind.speed + "MPH");
-// var uvContentEl = createParagraph("UV Index: " + weather.pop);
