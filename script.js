@@ -9,6 +9,7 @@ var todaysCard = document.getElementById("todays-card");
  function displayTodaysWeather(event) {
 
     event.preventDefault();
+    todaysCard.innerHTML = "";
     var cityInput = document.querySelector("#city-input");
 
     console.log(cityInput);
@@ -89,6 +90,8 @@ var todaysCard = document.getElementById("todays-card");
 
     displayHeading();  
 
+    resultCard.innerHTML = "";
+
     var container = document.createElement('div')
     container.style.display = 'flex';
     container.style.alignItems = 'center';
@@ -158,14 +161,27 @@ function callApi(event) {
 
         function getSearchHistory(){
 
+            var pastSearch = document.querySelector("#past-search")
+            pastSearch.innerHTML = "";
+
             var cityInput = document.querySelector("#city-input").value;
 
             searchHistory = JSON.parse(localStorage.getItem("search-history"))
-
+            console.log(searchHistory);
             for(i=0; i < searchHistory.length; i++){
-                        searchHistory.append('<button type="button" onclick="searchHistory(event)" id ="'+searchHistory[i]+'"class="col-12 btn btn-info text-muted historyBttn">'+ searchHistory[i] +'</button><div class="p-1"></div>' )        
+            var btn = document.createElement('button')
+            btn.innerText = searchHistory[i] 
+            btn.setAttribute('type', 'button');
+            btn.addEventListener('click', function(){
+                displayTodaysWeather();
+                displayFutureWeather();
+            });
+           
+            // '<button type="button" onclick="searchHistory(event)" id ="'+ searchHistory[i]+'"class="col-12 btn btn-info text-muted historyBttn">'+ searchHistory[i] +'</button>'
+            pastSearch.appendChild(btn);
+
                     }
-                } 
+        } 
         
 
         function storeSearchHistory() {
@@ -181,7 +197,7 @@ function callApi(event) {
 
 
         }
-        
+
         function displayHeading() {
 
             var heading = document.createElement('h2');
