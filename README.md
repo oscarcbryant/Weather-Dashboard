@@ -22,12 +22,16 @@ We started to understand more about the role of objects against functions - ie:
  
 However, we still have more to do on this project, including:
 
-Setting UV's color to change as per the rating of UV index
-Remembering selections and saving them to local storage so the page maintains these on the browser
-Seperating for loop's effect on the first block
-styling and polish - ensure page meets requirements aesthetically as per the brief. 
+## Project Update Feb 3rd 2022
 
-We'll continue to work on this assignment and attempt to fulfill the remaining requirements over the coming weeks.
+Over the past few weeks we successfully:
+
+Created if statements to adjust UV's background color as per the rating of the variable.
+Saved selections to local storage so the page maintains these in application. We then pulled this data so that further buttons can be created on the browser and displays results under the search bar.
+Consolidated code and build functions within our main function callApi();.
+Used bootstrap to style the page, including colors of todays weather card and future weather cards.
+
+A very challenging assignment but many lessons learnt about javascript, api's, bootstrap and combining all learned skills.
 
 Thanks,
 Oscar
