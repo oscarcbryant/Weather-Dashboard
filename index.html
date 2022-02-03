@@ -12,15 +12,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <form class="search-input" id="cityForm">
+                <div class="search-input" id="cityForm">
                     <div class="form-example">
                         <label for="city"><strong>Search for a City:</strong> </label>
                         <div>
                             <input type="text" name="name" id="city-input" required placeholder="Rain, Hail or Shine!" />
                         </div>
                     </div>
-                    <button class='select-button' type='submit'>Let's go!</button>
-                </form>
+                    <button id="search-button" class='select-button' type='submit'>Let's go!</button>
+                </div>
                 <div id="past-search">
 
                 </div>
@@ -30,7 +30,7 @@
                     <p id="uvindex"></p>
                 </div>
                 <div class='container'>
-                    <div id="result-card" class='row'>
+                    <div id="result-card" class='d-flex'>
                     </div>
                 </div>
             </div>
